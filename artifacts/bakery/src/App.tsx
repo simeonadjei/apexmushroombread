@@ -7,6 +7,7 @@ import Order from '@/pages/order';
 import Referral from '@/pages/referral';
 import ReferralDashboard from '@/pages/referral-dashboard';
 import TrackOrder from '@/pages/track';
+import Donate from '@/pages/donate';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient({
@@ -27,6 +28,7 @@ function Router() {
         <Route path="/referral" component={Referral} />
         <Route path="/referral/dashboard" component={ReferralDashboard} />
         <Route path="/track" component={TrackOrder} />
+        <Route path="/donate" component={Donate} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

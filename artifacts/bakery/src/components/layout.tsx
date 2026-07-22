@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import LogoPng from "@assets/Screenshot_20231220-084124_1_1784713489751.png";
+import LogoPng from "@assets/ChatGPT_Image_Jul_22,_2026,_10_36_42_AM_1784716629045.png";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -10,6 +10,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/track", label: "Track Order" },
     { href: "/referral", label: "Refer & Earn" },
     { href: "/referral/dashboard", label: "Referral Dashboard" },
+    { href: "/donate", label: "Donate" },
   ];
 
   return (
@@ -19,11 +20,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="h-10 w-10 rounded-full overflow-hidden bg-black flex items-center justify-center border-2 border-primary group-hover:scale-105 transition-transform duration-300">
-              <img src={LogoPng} alt="Mcphoebe Logo" className="h-full w-full object-cover" />
+              <img src={LogoPng} alt="Apex Mushroom Logo" className="h-full w-full object-cover" />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif font-bold text-lg leading-tight tracking-tight text-foreground">Mcphoebe</span>
-              <span className="text-[0.65rem] uppercase tracking-widest text-muted-foreground font-semibold">Enterprise</span>
+              <span className="font-serif font-bold text-lg leading-tight tracking-tight text-foreground">Apex Mushroom</span>
+              <span className="text-[0.65rem] uppercase tracking-widest text-muted-foreground font-semibold">Bread</span>
             </div>
           </Link>
 
@@ -41,7 +42,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <Link href="/donate" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-primary text-primary bg-transparent hover:bg-primary/10 h-9 px-4 py-2">
+              Donate
+            </Link>
             <Link href="/order" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">
               Order Bread
             </Link>
@@ -61,11 +65,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-12 w-12 rounded-full overflow-hidden bg-black flex items-center justify-center border-2 border-primary">
-                  <img src={LogoPng} alt="Mcphoebe Logo" className="h-full w-full object-cover" />
+                  <img src={LogoPng} alt="Apex Mushroom Logo" className="h-full w-full object-cover" />
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-xl text-white">Mcphoebe</h3>
-                  <p className="text-primary text-xs font-semibold uppercase tracking-widest">Mushroom Bread</p>
+                  <h3 className="font-serif font-bold text-xl text-white">Apex Mushroom</h3>
+                  <p className="text-primary text-xs font-semibold uppercase tracking-widest">Bread</p>
                 </div>
               </div>
               <p className="text-gray-400 text-sm max-w-xs leading-relaxed">
@@ -102,7 +106,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Required Copyright Strip */}
       <div className="bg-white py-4 border-t-2 border-primary text-center">
         <p className="font-bold text-black text-sm uppercase tracking-wide">
-          Copyright &copy; 2025 All Rights Reserved Mcphoebe Enterprise
+          Copyright &copy; 2025 All Rights Reserved Apex Mushroom Bread
         </p>
       </div>
     </div>
