@@ -1,0 +1,186 @@
+import { Link } from "wouter";
+import { useGetStats } from "@workspace/api-client-react";
+import { ArrowRight, Cookie, Users, TrendingUp, CheckCircle2, Star, ChefHat, HeartHandshake } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function Home() {
+  const { data: stats, isLoading: statsLoading } = useGetStats();
+
+  return (
+    <div className="flex flex-col w-full">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-black text-white py-20 md:py-32">
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          {/* Subtle noise/texture overlay could go here */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0,transparent_100%)]"></div>
+        </div>
+        <div className="container relative z-10 mx-auto px-4 text-center">
+          <Badge className="mb-6" />
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight text-white drop-shadow-sm">
+            Taste the <span className="text-primary">Golden</span> Magic of Mushroom Bread.
+          </h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Proudly baked in Kumasi, Ghana. Rich in flavor, packed with nutrients, and made with love. Experience the artisanal difference today.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/order" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-14 px-10 w-full sm:w-auto">
+              Order Your Bread Now
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+            <Link href="/referral" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-2 border-white/20 bg-transparent text-white hover:bg-white/10 h-14 px-10 w-full sm:w-auto">
+              Refer & Earn 15%
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Story Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <ChefHat className="h-16 w-16 text-primary mx-auto mb-4" />
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-black">Our Customer, Our Gold.</h2>
+            <div className="w-24 h-1 bg-primary mx-auto"></div>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              At Mcphoebe Enterprise, we believe that baking is an act of love. Located in the heart of Kumasi, we've pioneered a unique recipe that blends premium wheat with nutritious mushrooms to create a loaf unlike any other. It’s not just bread; it’s a commitment to your health and a celebration of Ghanaian innovation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-gray-50 border-y">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl font-bold mb-4">A Growing Community</h2>
+            <p className="text-muted-foreground">Join thousands of satisfied customers across Ghana.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <StatCard 
+              icon={<Cookie />} 
+              label="Total Orders" 
+              value={stats?.totalOrders} 
+              isLoading={statsLoading} 
+            />
+            <StatCard 
+              icon={<Users />} 
+              label="Happy Referrers" 
+              value={stats?.totalReferrers} 
+              isLoading={statsLoading} 
+            />
+            <StatCard 
+              icon={<TrendingUp />} 
+              label="Earnings Distributed" 
+              value={stats?.totalEarningsDistributed ? `₵${stats.totalEarningsDistributed}` : '0'} 
+              isLoading={statsLoading} 
+            />
+            <StatCard 
+              icon={<Star />} 
+              label="Satisfaction" 
+              value="100%" 
+              isLoading={false} 
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Steps to Order */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h2 className="font-serif text-4xl font-bold text-center mb-16">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+            <div className="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-gray-200 z-0"></div>
+            
+            {[
+              { title: "Place Your Order", desc: "Fill out the simple order form with your details and quantity.", step: "1" },
+              { title: "Secure Payment", desc: "Pay securely via Paystack with mobile money or card.", step: "2" },
+              { title: "Track & Receive", desc: "Use your order ID to track status until it reaches your door.", step: "3" }
+            ].map((s, i) => (
+              <div key={i} className="relative z-10 flex flex-col items-center text-center bg-white">
+                <div className="w-24 h-24 rounded-full bg-primary/10 border-4 border-white shadow-sm flex items-center justify-center mb-6">
+                  <span className="font-serif text-3xl font-bold text-primary">{s.step}</span>
+                </div>
+                <h3 className="text-xl font-bold mb-3">{s.title}</h3>
+                <p className="text-muted-foreground">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Referral Teaser */}
+      <section className="py-24 bg-black text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
+          <HeartHandshake className="h-20 w-20 text-primary mx-auto mb-6" />
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">Share the Goodness. Earn Cash.</h2>
+          <p className="text-lg text-gray-300 mb-10 leading-relaxed">
+            Love our mushroom bread? Become a Mcphoebe referrer and earn a <strong>15% commission</strong> on every order placed through your unique link. It's our way of saying thank you.
+          </p>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-10 backdrop-blur-sm">
+            <ul className="text-left space-y-4 max-w-sm mx-auto">
+              {[
+                "Register for free in 30 seconds",
+                "Get a unique referral link instantly",
+                "Share with friends, family, and on social media",
+                "Earn 15% automatically on successful orders",
+                "Track your earnings on your dashboard"
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <CheckCircle2 className="text-primary h-5 w-5 flex-shrink-0" />
+                  <span className="text-gray-200">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link href="/referral" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-14 px-10">
+            Join the Referral Program
+          </Link>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-32 bg-primary">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-serif text-4xl md:text-6xl font-black text-black mb-8 tracking-tight">Ready for your first bite?</h2>
+          <Link href="/order" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-lg font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-black text-white shadow-xl hover:bg-gray-900 h-16 px-12 transform hover:scale-105 duration-200">
+            Order Mushroom Bread
+            <ArrowRight className="ml-2 h-6 w-6" />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Badge({ className }: { className?: string }) {
+  return (
+    <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm font-medium text-white backdrop-blur-md", className)}>
+      <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+      Authentic Kumasi Recipe
+    </div>
+  );
+}
+
+function cn(...classes: (string | undefined)[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
+function StatCard({ icon, label, value, isLoading }: { icon: React.ReactNode, label: string, value: string | number | undefined, isLoading: boolean }) {
+  return (
+    <div className="bg-white p-6 rounded-2xl border shadow-sm flex flex-col items-center text-center transform transition-transform hover:-translate-y-1 duration-300">
+      <div className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
+        {icon}
+      </div>
+      {isLoading ? (
+        <Skeleton className="h-8 w-24 mb-2" />
+      ) : (
+        <h4 className="font-serif text-3xl font-black text-black mb-1">{value || 0}</h4>
+      )}
+      <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{label}</p>
+    </div>
+  );
+}

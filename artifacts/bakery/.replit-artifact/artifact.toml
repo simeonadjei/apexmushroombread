@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Mcphoebe Mushroom Bread Bakery"
+version = "1.0.0"
+id = "artifacts/bakery"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23375
+
+[services.development]
+run = "pnpm --filter @workspace/bakery run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bakery", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bakery/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23375"
+BASE_PATH = "/"

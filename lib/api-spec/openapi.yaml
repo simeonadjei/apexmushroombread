@@ -3,20 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Mcphoebe Mushroom Bread Bakery API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: referrers
+    description: Referral program operations
+  - name: orders
+    description: Order operations
+  - name: stats
+    description: Statistics operations
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,166 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /referrers/register:
+    post:
+      operationId: registerReferrer
+      tags: [referrers]
+      summary: Register for the referral program
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReferrerInput"
+      responses:
+        "201":
+          description: Registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Referrer"
+        "409":
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /referrers/{referralCode}:
+    get:
+      operationId: getReferrerByCode
+      tags: [referrers]
+      summary: Get referrer by referral code
+      parameters:
+        - name: referralCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Referrer found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Referrer"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /referrers/{referrerId}/earnings:
+    get:
+      operationId: getReferrerEarnings
+      tags: [referrers]
+      summary: Get referral earnings for a referrer
+      parameters:
+        - name: referrerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Earnings list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReferralEarning"
+
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Create a new order and get payment details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      summary: Get order by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /orders/verify:
+    post:
+      operationId: verifyOrderPayment
+      tags: [orders]
+      summary: Verify Paystack payment and confirm order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentVerifyInput"
+      responses:
+        "200":
+          description: Payment verified and order confirmed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          description: Payment verification failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /stats:
+    get:
+      operationId: getStats
+      tags: [stats]
+      summary: Get bakery statistics
+      responses:
+        "200":
+          description: Statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Stats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +200,134 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+
+    ReferrerInput:
+      type: object
+      required: [name, email, phone]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+        phone:
+          type: string
+          minLength: 1
+
+    Referrer:
+      type: object
+      required: [id, name, email, phone, referralCode, totalEarnings, paidEarnings, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        referralCode:
+          type: string
+        totalEarnings:
+          type: number
+        paidEarnings:
+          type: number
+        createdAt:
+          type: string
+
+    OrderInput:
+      type: object
+      required: [customerName, customerEmail, customerPhone, customerAddress, amount]
+      properties:
+        customerName:
+          type: string
+          minLength: 1
+        customerEmail:
+          type: string
+        customerPhone:
+          type: string
+          minLength: 1
+        customerAddress:
+          type: string
+          minLength: 1
+        amount:
+          type: number
+          minimum: 1
+        notes:
+          type: ["string", "null"]
+        isBulk:
+          type: boolean
+        referralCode:
+          type: ["string", "null"]
+
+    Order:
+      type: object
+      required: [id, customerName, customerEmail, customerPhone, customerAddress, amount, status, createdAt]
+      properties:
+        id:
+          type: integer
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        customerPhone:
+          type: string
+        customerAddress:
+          type: string
+        amount:
+          type: number
+        notes:
+          type: ["string", "null"]
+        isBulk:
+          type: boolean
+        referralCode:
+          type: ["string", "null"]
+        paystackRef:
+          type: ["string", "null"]
+        status:
+          type: string
+        createdAt:
+          type: string
+
+    PaymentVerifyInput:
+      type: object
+      required: [reference]
+      properties:
+        reference:
+          type: string
+
+    ReferralEarning:
+      type: object
+      required: [id, referrerId, orderId, amount, status, createdAt]
+      properties:
+        id:
+          type: integer
+        referrerId:
+          type: integer
+        orderId:
+          type: integer
+        amount:
+          type: number
+        status:
+          type: string
+        createdAt:
+          type: string
+
+    Stats:
+      type: object
+      required: [totalOrders, totalAmount, totalReferrers, totalEarningsDistributed]
+      properties:
+        totalOrders:
+          type: integer
+        totalAmount:
+          type: number
+        totalReferrers:
+          type: integer
+        totalEarningsDistributed:
+          type: number
