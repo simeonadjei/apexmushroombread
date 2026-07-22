@@ -92,6 +92,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <p>Tanoso Market Street</p>
                 <p>Near the Despite Building</p>
                 <p>Tanoso, Kumasi — Ghana</p>
+                <p>GPS: AK-741-9466</p>
                 <p className="text-primary font-serif italic text-lg mt-4">"Our Customer, Our Gold."</p>
               </address>
             </div>
