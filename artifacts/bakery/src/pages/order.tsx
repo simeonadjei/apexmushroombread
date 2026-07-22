@@ -59,7 +59,8 @@ export default function Order() {
         setIsRedirecting(true);
         try {
           const callbackUrl = `${window.location.origin}/order/callback`;
-          const res = await fetch(`/api/orders/${order.id}/pay`, {
+          const apiBase = (import.meta.env.VITE_API_URL as string) || "";
+          const res = await fetch(`${apiBase}/api/orders/${order.id}/pay`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ callbackUrl }),

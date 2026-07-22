@@ -8,38 +8,39 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-white flex flex-col justify-end pb-16 pt-0" style={{ minHeight: "600px" }}>
-        {/* Background image */}
-        <div className="absolute inset-0">
+      <section className="flex flex-col w-full">
+        {/* Bread image — full width, clearly visible */}
+        <div className="w-full overflow-hidden" style={{ height: "clamp(260px, 55vw, 520px)" }}>
           <img
             src={BreadHero}
             alt="Apex Mushroom Bread"
             className="w-full h-full object-cover object-center"
           />
-          {/* Gradient overlay — dark at bottom for text, clear at top to show bread */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto px-4 text-center mt-auto">
-          <Badge className="mb-6" />
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight text-white drop-shadow-lg">
-            Rise Above. <span className="text-primary">Taste the Apex.</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow">
-            A Mcphoebe Enterprise product — proudly baked with fresh mushrooms. Rich in flavor, packed with nutrients, and made with love.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/order" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-14 px-10 w-full sm:w-auto">
-              Order Your Bread Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link href="/donate" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm h-14 px-10 w-full sm:w-auto">
-              <Heart className="mr-2 h-5 w-5" />
-              Donate
-            </Link>
-            <Link href="/referral" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-2 border-white/20 bg-transparent text-white hover:bg-white/10 h-14 px-10 w-full sm:w-auto">
-              Refer & Earn 15%
-            </Link>
+        {/* Text & CTAs — below the image, dark background */}
+        <div className="bg-gray-900 text-white py-10 px-4">
+          <div className="container mx-auto text-center">
+            <Badge className="mb-5" />
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-black mb-5 tracking-tight text-white drop-shadow-lg">
+              Rise Above. <span className="text-primary">Taste the Apex.</span>
+            </h1>
+            <p className="text-base md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+              A Mcphoebe Enterprise product — proudly baked with fresh mushrooms. Rich in flavor, packed with nutrients, and made with love.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="/order" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-14 px-10 w-full sm:w-auto">
+                Order Your Bread Now
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link href="/donate" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-2 border-white/30 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm h-14 px-10 w-full sm:w-auto">
+                <Heart className="mr-2 h-5 w-5" />
+                Donate
+              </Link>
+              <Link href="/referral" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-2 border-white/20 bg-transparent text-white hover:bg-white/10 h-14 px-10 w-full sm:w-auto">
+                Refer & Earn 15%
+              </Link>
+            </div>
           </div>
         </div>
       </section>
