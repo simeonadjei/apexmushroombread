@@ -20,7 +20,7 @@ const formSchema = z.object({
   customerEmail: z.string().email("Invalid email address"),
   customerPhone: z.string().min(10, "Phone number must be at least 10 digits"),
   customerAddress: z.string().min(5, "Address must be at least 5 characters"),
-  amount: z.coerce.number().min(1, "Amount must be at least 1"),
+  amount: z.coerce.number().min(0.01, "Amount must be greater than 0"),
   notes: z.string().optional(),
   isBulk: z.boolean().default(false),
   referralCode: z.string().optional(),
@@ -236,9 +236,8 @@ export default function Order() {
                       <FormItem>
                         <FormLabel>Order Amount (GHC)</FormLabel>
                         <FormControl>
-                          <Input type="number" min="1" step="0.01" {...field} disabled={isLoading} />
+                          <Input type="number" min="0.01" step="0.01" {...field} disabled={isLoading} />
                         </FormControl>
-                        <FormDescription>Minimum order is ₵50.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}

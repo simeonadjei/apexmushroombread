@@ -18,7 +18,8 @@ export default function Donate() {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/donations/initialize", {
+      const apiBase = (import.meta.env.VITE_API_URL as string) || "";
+      const res = await fetch(`${apiBase}/api/donations/initialize`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, amount: parsedAmount }),
