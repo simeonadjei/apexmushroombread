@@ -93,6 +93,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <p>Near the Despite Building</p>
                 <p>Tanoso, Kumasi — Ghana</p>
                 <p>GPS: AK-741-9466</p>
+                <a href="mailto:mcphoebeenterprise@gmail.com" className="hover:text-primary transition-colors">mcphoebeenterprise@gmail.com</a>
                 <p className="text-primary font-serif italic text-lg mt-4">"Our Customer, Our Gold."</p>
               </address>
             </div>
