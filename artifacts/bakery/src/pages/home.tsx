@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
-      <section className="relative overflow-hidden text-white py-20 md:py-36" style={{ minHeight: "600px" }}>
+      <section className="relative overflow-hidden text-white flex flex-col justify-end pb-16 pt-0" style={{ minHeight: "600px" }}>
         {/* Background image */}
         <div className="absolute inset-0">
           <img
@@ -15,11 +15,11 @@ export default function Home() {
             alt="Apex Mushroom Bread"
             className="w-full h-full object-cover object-center"
           />
-          {/* Dark overlay for legibility */}
-          <div className="absolute inset-0 bg-black/60"></div>
+          {/* Gradient overlay — dark at bottom for text, clear at top to show bread */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto px-4 text-center">
+        <div className="container relative z-10 mx-auto px-4 text-center mt-auto">
           <Badge className="mb-6" />
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tight text-white drop-shadow-lg">
             Rise Above. <span className="text-primary">Taste the Apex.</span>
