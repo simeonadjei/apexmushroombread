@@ -1,11 +1,8 @@
 import { Link } from "wouter";
-import { useGetStats } from "@workspace/api-client-react";
-import { ArrowRight, Cookie, Users, TrendingUp, CheckCircle2, Star, ChefHat, HeartHandshake, Heart } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { ArrowRight, CheckCircle2, ChefHat, HeartHandshake, Heart, Quote } from "lucide-react";
 import BreadHero from "@assets/ChatGPT_Image_Jul_22,_2026,_10_36_42_AM_1784716629045.png";
 
 export default function Home() {
-  const { data: stats, isLoading: statsLoading } = useGetStats();
 
   return (
     <div className="flex flex-col w-full">
@@ -60,38 +57,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Testimonials Section */}
       <section className="py-20 bg-gray-50 border-y">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-serif text-3xl font-bold mb-4">A Growing Community</h2>
-            <p className="text-muted-foreground">Join thousands of satisfied customers across Ghana.</p>
+            <p className="text-muted-foreground">Real voices from people who love Apex Mushroom Bread.</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            <StatCard 
-              icon={<Cookie />} 
-              label="Total Orders" 
-              value={stats?.totalOrders} 
-              isLoading={statsLoading} 
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <TestimonialCard
+              quote="I never thought bread could taste this good and still be healthy. The mushroom flavour is so unique — my whole family is hooked!"
+              name="Abena Mensah"
+              location="Accra, Ghana"
             />
-            <StatCard 
-              icon={<Users />} 
-              label="Happy Referrers" 
-              value={stats?.totalReferrers} 
-              isLoading={statsLoading} 
+            <TestimonialCard
+              quote="Apex Mushroom Bread has become our go-to for breakfast. Fresh, soft, and packed with flavour. Nothing else comes close."
+              name="Kweku Asante"
+              location="Kumasi, Ghana"
             />
-            <StatCard 
-              icon={<TrendingUp />} 
-              label="Earnings Distributed" 
-              value={stats?.totalEarningsDistributed ? `₵${stats.totalEarningsDistributed}` : '0'} 
-              isLoading={statsLoading} 
-            />
-            <StatCard 
-              icon={<Star />} 
-              label="Satisfaction" 
-              value="100%" 
-              isLoading={false} 
+            <TestimonialCard
+              quote="I ordered for an event and the guests couldn't stop asking where the bread came from. Mcphoebe Enterprise really did something special here."
+              name="Esi Boateng"
+              location="Takoradi, Ghana"
             />
           </div>
         </div>
@@ -181,18 +169,15 @@ function cn(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-function StatCard({ icon, label, value, isLoading }: { icon: React.ReactNode, label: string, value: string | number | undefined, isLoading: boolean }) {
+function TestimonialCard({ quote, name, location }: { quote: string; name: string; location: string }) {
   return (
-    <div className="bg-white p-6 rounded-2xl border shadow-sm flex flex-col items-center text-center transform transition-transform hover:-translate-y-1 duration-300">
-      <div className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
-        {icon}
+    <div className="bg-white p-7 rounded-2xl border shadow-sm flex flex-col gap-4 transform transition-transform hover:-translate-y-1 duration-300">
+      <Quote className="h-7 w-7 text-primary/40" />
+      <p className="text-gray-700 leading-relaxed flex-1">"{quote}"</p>
+      <div>
+        <p className="font-semibold text-sm text-gray-900">{name}</p>
+        <p className="text-xs text-muted-foreground">{location}</p>
       </div>
-      {isLoading ? (
-        <Skeleton className="h-8 w-24 mb-2" />
-      ) : (
-        <h4 className="font-serif text-3xl font-black text-black mb-1">{value || 0}</h4>
-      )}
-      <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{label}</p>
     </div>
   );
 }
