@@ -23,8 +23,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <img src={LogoPng} alt="Apex Mushroom Logo" className="h-full w-full object-cover" />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif font-bold text-lg leading-tight tracking-tight text-foreground">Apex Mushroom</span>
-              <span className="text-[0.65rem] uppercase tracking-widest text-muted-foreground font-semibold">Bread</span>
+              <span className="font-serif font-bold text-lg leading-tight tracking-tight text-foreground">Apex Mushroom Bread</span>
+              <span className="text-[0.65rem] uppercase tracking-widest text-muted-foreground font-semibold">by Mcphoebe Enterprise</span>
             </div>
           </Link>
 
@@ -68,12 +68,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <img src={LogoPng} alt="Apex Mushroom Logo" className="h-full w-full object-cover" />
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-xl text-white">Apex Mushroom</h3>
-                  <p className="text-primary text-xs font-semibold uppercase tracking-widest">Bread</p>
+                  <h3 className="font-serif font-bold text-xl text-white">Apex Mushroom Bread</h3>
+                  <p className="text-primary text-xs font-semibold uppercase tracking-widest">Mcphoebe Enterprise</p>
                 </div>
               </div>
               <p className="text-gray-400 text-sm max-w-xs leading-relaxed">
-                A proudly Ghanaian artisanal mushroom bread bakery. We bake with love, community, and the finest ingredients.
+                A proudly Ghanaian artisanal mushroom bread bakery by Mcphoebe Enterprise. We bake with love, community, and the finest ingredients.
               </p>
             </div>
             
@@ -106,7 +106,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Required Copyright Strip */}
       <div className="bg-white py-4 border-t-2 border-primary text-center">
         <p className="font-bold text-black text-sm uppercase tracking-wide">
-          Copyright &copy; 2025 All Rights Reserved Apex Mushroom Bread
+          Copyright &copy; 2025 All Rights Reserved &mdash; Mcphoebe Enterprise &bull; Apex Mushroom Bread
         </p>
       </div>
     </div>

@@ -28,7 +28,7 @@ export default function Home() {
             Rise Above. <span className="text-primary">Taste the Apex.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow">
-            Proudly baked with fresh mushrooms. Rich in flavor, packed with nutrients, and made with love. Experience the artisanal difference today.
+            A Mcphoebe Enterprise product — proudly baked with fresh mushrooms. Rich in flavor, packed with nutrients, and made with love.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/order" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-14 px-10 w-full sm:w-auto">
