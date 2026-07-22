@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { MessageCircle, Phone } from "lucide-react";
 import LogoPng from "@assets/ChatGPT_Image_Jul_22,_2026,_10_36_42_AM_1784716629045.png";
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -94,6 +95,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <p>Tanoso, Kumasi — Ghana</p>
                 <p>GPS: AK-741-9466</p>
                 <a href="mailto:mcphoebeenterprise@gmail.com" className="hover:text-primary transition-colors">mcphoebeenterprise@gmail.com</a>
+                <a href="tel:+233538025040" className="flex items-center gap-2 hover:text-primary transition-colors">
+                  <Phone className="h-4 w-4 flex-shrink-0" />
+                  0538025040
+                </a>
+                <a
+                  href="https://wa.me/233540984944"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 text-white text-sm font-semibold transition-colors w-fit"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Chat on WhatsApp
+                </a>
                 <p className="text-primary font-serif italic text-lg mt-4">"Our Customer, Our Gold."</p>
               </address>
             </div>

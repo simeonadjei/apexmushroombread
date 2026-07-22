@@ -1,0 +1,45 @@
+remove the minimum order at the order now button, procesing keeps rolling when paystack payment is clicked---------We could not start this transaction
+
+Please enter a valid Key, at contact us, add GPS - AK-741-9466.
+
+Location, --Tanoso-Kumasi, Street Name - Tanoso Market Street, Near the Despite Building, House Number - Plot 1, Block B
+
+I'll update the address in the footer right now.
+
+Now let me commit and push that address update to GitHub so Render redeploys it.
+
+Pushed. Render will automatically redeploy your static site — the footer will show the full address:
+
+Plot 1, Block B
+Tanoso Market Street
+Near the Despite Building
+Tanoso, Kumasi — Ghana
+add GPS Address - AK-741-9466
+
+Pushed and deploying. Render will rebuild the static site and the footer will now show GPS: AK-741-9466 alongside the full address.
+
+add email- mcphoebeenterprise@gmail.com
+
+Pushed. The footer will now show mcphoebeenterprise@gmail.com as a clickable email link once Render finishes deploying.
+
+Rise Above. Taste the Apex. A Mcphoebe Enterprise product — proudly baked with fresh mushrooms. Rich in flavor, packed with nutrients, and made with love.
+
+Order Your Bread Now Donate Refer & Earn 15%---------these writings are covering the bread picture, let the the bread be seen
+
+Now let the text sit at the bottom where it's dark, so the bread shows clearly at the top.
+
+Pushed — Render will redeploy with the bread now clearly visible. The gradient darkens only at the bottom where the text sits, leaving the top of the image open so the bread shows through fully.
+
+couldnot reah payment server, try again, ---when the donate was clicked, at the order now page, remove the minimum amount, let the paystack work
+
+Two issues to fix in parallel — the donate page uses a relative URL that doesn't work across domains, and the order page has a minimum amount restriction.
+
+Pushed and deploying. Once Render rebuilds:
+
+Donate — will now correctly reach the API server at https://apexmushroombread.onrender.com instead of failing with the relative URL
+Order page — the "Minimum order is ₵50" text and restriction are gone, any amount above ₵0 will work with Paystack
+Also make sure your Render API web service has PAYSTACK_SECRET_KEY set in its environment variables — that's required for both donations and order payment verification to go through.
+
+add telephone number at the contact -- 0538025040 and whatsapp button connected to this number 0540984944, but dont show this whatsapp number
+
+You've reached your daily free quota limit. It will reset at 12:00 AM UTC.
