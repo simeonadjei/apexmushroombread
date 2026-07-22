@@ -18,7 +18,7 @@ export default function Donate() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.BASE_URL}api/donations/initialize`.replace(/\/+/g, "/").replace(":/", "://"), {
+      const res = await fetch("/api/donations/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, amount: parsedAmount }),
@@ -27,13 +27,13 @@ export default function Donate() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(data.error || "Failed to initialize donation.");
+        toast.error(data.error || "Failed to initialize donation. Please try again.");
         return;
       }
 
       window.location.href = data.authorization_url;
     } catch {
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Could not reach the payment server. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -171,7 +171,7 @@ export default function Order() {
     <div className="flex-1 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="font-serif text-4xl font-bold text-gray-900 mb-4">Order Mushroom Bread</h1>
+          <h1 className="font-serif text-4xl font-bold text-gray-900 mb-4">Order Apex Mushroom Bread</h1>
           <p className="text-lg text-gray-600">Freshly baked in Kumasi and delivered to your doorstep.</p>
         </div>
 
