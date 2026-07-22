@@ -102,6 +102,69 @@ router.get("/orders/:id", async (req, res): Promise<void> => {
   res.json(response);
 });
 
+// POST /orders/:id/pay — initialize Paystack transaction server-side
+router.post("/orders/:id/pay", async (req, res): Promise<void> => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "Invalid order ID." });
+    return;
+  }
+
+  const { callbackUrl } = req.body as { callbackUrl?: unknown };
+  if (typeof callbackUrl !== "string" || !callbackUrl.startsWith("http")) {
+    res.status(400).json({ error: "A valid callbackUrl is required." });
+    return;
+  }
+
+  const [order] = await db
+    .select()
+    .from(ordersTable)
+    .where(eq(ordersTable.id, id))
+    .limit(1);
+
+  if (!order) {
+    res.status(404).json({ error: "Order not found." });
+    return;
+  }
+
+  const secretKey = process.env.PAYSTACK_SECRET_KEY;
+  if (!secretKey) {
+    res.status(500).json({ error: "Payment not configured." });
+    return;
+  }
+
+  const amountInKobo = Math.round(parseFloat(order.amount) * 100);
+
+  const paystackRes = await fetch("https://api.paystack.co/transaction/initialize", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: order.customerEmail,
+      amount: amountInKobo,
+      currency: "GHS",
+      callback_url: callbackUrl,
+      metadata: { orderId: order.id, customerName: order.customerName },
+    }),
+  });
+
+  const data = (await paystackRes.json()) as {
+    status: boolean;
+    data?: { authorization_url: string; reference: string };
+    message?: string;
+  };
+
+  if (!data.status || !data.data) {
+    req.log.error({ msg: "Paystack init error", detail: data.message });
+    res.status(502).json({ error: data.message || "Could not initialize payment." });
+    return;
+  }
+
+  res.json({ authorization_url: data.data.authorization_url, reference: data.data.reference });
+});
+
 // POST /orders/verify
 router.post("/orders/verify", async (req, res): Promise<void> => {
   const parsed = VerifyOrderPaymentBody.safeParse(req.body);

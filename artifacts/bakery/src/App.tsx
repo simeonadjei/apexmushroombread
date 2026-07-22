@@ -4,6 +4,7 @@ import { Route, Switch, Router as WouterRouter } from 'wouter';
 import { Layout } from '@/components/layout';
 import Home from '@/pages/home';
 import Order from '@/pages/order';
+import OrderCallback from '@/pages/order-callback';
 import Referral from '@/pages/referral';
 import ReferralDashboard from '@/pages/referral-dashboard';
 import TrackOrder from '@/pages/track';
@@ -25,6 +26,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/order" component={Order} />
+        <Route path="/order/callback" component={OrderCallback} />
         <Route path="/referral" component={Referral} />
         <Route path="/referral/dashboard" component={ReferralDashboard} />
         <Route path="/track" component={TrackOrder} />
