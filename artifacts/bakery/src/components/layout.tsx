@@ -86,10 +86,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
             <div>
               <h4 className="font-serif font-bold text-lg mb-4 text-white">Contact Us</h4>
-              <address className="not-italic text-sm text-gray-400 space-y-3">
+              <address className="not-italic text-sm text-gray-400 space-y-2">
                 <p>Mcphoebe Enterprise</p>
-                <p>P.O. Box UE 27</p>
-                <p>Kumasi, Ghana</p>
+                <p>Plot 1, Block B</p>
+                <p>Tanoso Market Street</p>
+                <p>Near the Despite Building</p>
+                <p>Tanoso, Kumasi — Ghana</p>
                 <p className="text-primary font-serif italic text-lg mt-4">"Our Customer, Our Gold."</p>
               </address>
             </div>
