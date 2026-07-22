@@ -1,0 +1,132 @@
+Skip to content
+
+AI
+
+
+
+
+
+
+
+
+
+
+/
+
+
+
+image_1784720322024.png
+what next
+
+CR
+create410
+create410
+27 minutes ago
+Configuring repository access
+
+Configuring repository access
+Good — the repo is on GitHub. Now go back to the Render tab and:
+
+Click Credentials (1) dropdown → select Configure
+It opens a GitHub page — under Repository access, click Select repositories and add apexmushroombread
+Click Save — go back to Render, search apex in the box, and it will appear
+Click it to select it, then scroll down and fill the settings exactly as the table I gave you earlier
+
+Checkpoint made
+27 minutes ago
+
+Worked for 16 seconds
+neon gives free no expiry database ?
+
+CR
+create410
+create410
+17 minutes ago
+Checking Neon's free tier
+
+Checking Neon's free tier
+Yes — Neon's free tier is permanent, no expiry. Here's what you get:
+
+1 project, 10 branches
+0.5 GB storage
+190 compute hours/month (plenty for a small app — the DB auto-pauses when idle to save hours)
+No credit card required
+For a bakery app at this scale it's more than enough. The auto-pause just means the first query after idle takes ~1 second to wake up, which is barely noticeable.
+
+
+Worked for 11 seconds
+i want apexmushroombread instead of apexmushroombread-api, ok?
+
+CR
+create410
+create410
+14 minutes ago
+Renaming service instance
+
+Renaming service instance
+Absolutely, just name it `apexmushroombread` — no difference in how it works.
+
+Worked for 10 seconds
+
+Attached Image
+CR
+create410
+create410
+10 minutes ago
+Starting new project
+
+Starting new project
+You're in. Click **Create project** and:
+
+- **Project name:** `apexmushroombread`
+- **Postgres version:** 16 (default)
+- **Region:** pick the closest to Ghana — **AWS EU West (Frankfurt)** or **AWS EU Central** works well
+
+Click **Create** — Neon will give you a connection string on the next screen. Copy it and bring it here.
+
+Checkpoint made
+10 minutes ago
+
+Worked for 16 seconds
+
+Attached Image
+CR
+create410
+create410
+9 minutes ago
+Selecting optimal region
+
+Selecting optimal region
+Frankfurt is already selected and highlighted — that's the best choice for Ghana. Just click on it to confirm and then hit Create project.
+
+
+Checkpoint made
+9 minutes ago
+
+Worked for 14 seconds
+==> Cloning from https://github.com/simeonadjei/apexmushroombread ==> Checking out commit 03e89e3b892431161aa24d3ae0b828d8fc892101 in branch main ==> Using Node.js version 24.14.1 (default) ==> Docs on specifying a Node.js version: https://render.com/docs/node-version ==> Running build command 'npm install -g pnpm && pnpm install && pnpm --filter @workspace/api-server run build'... npm error code EROFS npm error syscall rename npm error path /usr/lib/node_modules/pnpm npm error dest /usr/lib/node_modules/.pnpm-H0EZVZtB npm error errno -30 npm error rofs EROFS: read-only file system, rename '/usr/lib/node_modules/pnpm' -> '/usr/lib/node_modules/.pnpm-H0EZVZtB' npm error rofs Often virtualized file systems, or other file systems npm error rofs that don't support symlinks, give this error. npm error A complete log of this run can be found in: /opt/render/.cache/_logs/2026-07-22T11_59_22_485Z-debug-0.log ==> Build failed 😞 ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+
+CR
+create410
+create410
+5 minutes ago
+
+3 actions
+Render's file system is read-only so `npm install -g pnpm` fails. Change the build command to use `corepack` instead — it's already available in Node 24 and doesn't need write access.
+
+2 actions
+The fix is to add a `packageManager` field to root `package.json` so Render can activate pnpm via `corepack` (already built into Node 24).
+
+8 actions
+Pushed. Now go back to Render and update the **Build Command** to:
+
+```
+corepack enable pnpm && pnpm install && pnpm --filter @workspace/api-server run build
+```
+
+Then click **Save** (or **Manual Deploy → Deploy latest commit**) to retrigger the build.
+
+Worked for 51 seconds
+
+Scroll to latest
+Guests can't use Agent in Starter Plan user's repls
