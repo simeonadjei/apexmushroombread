@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { useState, useEffect } from "react";
 import { ArrowRight, CheckCircle2, ChefHat, HeartHandshake, Heart, Quote } from "lucide-react";
 import BreadHero from "@assets/ChatGPT_Image_Jul_22,_2026,_10_36_42_AM_1784716629045.png";
 
@@ -64,24 +65,7 @@ export default function Home() {
             <h2 className="font-serif text-3xl font-bold mb-4">A Growing Community</h2>
             <p className="text-muted-foreground">Real voices from people who love Apex Mushroom Bread.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <TestimonialCard
-              quote="I never thought bread could taste this good and still be healthy. The mushroom flavour is so unique — my whole family is hooked!"
-              name="Abena Mensah"
-              location="Accra, Ghana"
-            />
-            <TestimonialCard
-              quote="Apex Mushroom Bread has become our go-to for breakfast. Fresh, soft, and packed with flavour. Nothing else comes close."
-              name="Kweku Asante"
-              location="Kumasi, Ghana"
-            />
-            <TestimonialCard
-              quote="I ordered for an event and the guests couldn't stop asking where the bread came from. Mcphoebe Enterprise really did something special here."
-              name="Esi Boateng"
-              location="Takoradi, Ghana"
-            />
-          </div>
+          <TestimonialCarousel />
         </div>
       </section>
 
@@ -167,6 +151,68 @@ function Badge({ className }: { className?: string }) {
 
 function cn(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(" ");
+}
+
+const ALL_TESTIMONIALS = [
+  { quote: "I never thought bread could taste this good and still be healthy. The mushroom flavour is so unique — my whole family is hooked!", name: "Abena Mensah", location: "Accra, Ghana" },
+  { quote: "Apex Mushroom Bread has become our go-to for breakfast. Fresh, soft, and packed with flavour. Nothing else comes close.", name: "Kweku Asante", location: "Kumasi, Ghana" },
+  { quote: "I ordered for an event and the guests couldn't stop asking where the bread came from. Mcphoebe Enterprise really did something special here.", name: "Esi Boateng", location: "Takoradi, Ghana" },
+  { quote: "This bread changed my mornings. It's soft, nutritious, and has this deep earthy taste I can't get enough of. Highly recommend!", name: "Yaw Darko", location: "Sunyani, Ghana" },
+  { quote: "My kids refused to eat regular bread after trying Apex Mushroom Bread. That says it all. We order every week now.", name: "Akosua Frimpong", location: "Kumasi, Ghana" },
+  { quote: "The quality is outstanding. You can tell it's made with real care and fresh ingredients. This is Ghanaian excellence on a plate.", name: "Kofi Agyemang", location: "Cape Coast, Ghana" },
+  { quote: "I was skeptical about mushroom bread at first, but one bite and I was completely sold. It's now a staple in my house.", name: "Adjoa Amponsah", location: "Accra, Ghana" },
+  { quote: "Packed it in my children's lunchboxes and the teachers even asked me where I got it from. Mcphoebe is doing amazing work!", name: "Maame Serwaa", location: "Tamale, Ghana" },
+  { quote: "The delivery was quick and the bread was still warm. Absolutely delicious — I felt good eating something so wholesome.", name: "Nana Osei", location: "Kumasi, Ghana" },
+  { quote: "I run a small café and my customers kept requesting more of the mushroom bread. We now stock it every single day.", name: "Afua Boafo", location: "Tema, Ghana" },
+  { quote: "Healthy, affordable, and genuinely tasty. Mcphoebe Enterprise has really cracked the code on nutritious baking.", name: "Kwame Tetteh", location: "Ho, Ghana" },
+  { quote: "The texture is perfect — soft inside, slightly crusty outside. I've tried many local breads, but this one is on a different level.", name: "Ama Owusu", location: "Kumasi, Ghana" },
+  { quote: "Every loaf feels like it was baked with love. You taste the difference from the very first bite.", name: "Bright Asare", location: "Koforidua, Ghana" },
+  { quote: "I gifted a loaf to my neighbour and now she's ordering on her own every week. This bread sells itself!", name: "Efua Danso", location: "Bolgatanga, Ghana" },
+  { quote: "Best mushroom bread I've ever tasted. The nutritional value combined with the amazing taste makes it a perfect daily bread.", name: "Prince Osei-Bonsu", location: "Kumasi, Ghana" },
+];
+
+function TestimonialCarousel() {
+  const [page, setPage] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const perPage = 3;
+  const totalPages = Math.ceil(ALL_TESTIMONIALS.length / perPage);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setPage((p) => (p + 1) % totalPages);
+        setVisible(true);
+      }, 400);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [totalPages]);
+
+  const current = ALL_TESTIMONIALS.slice(page * perPage, page * perPage + perPage);
+
+  return (
+    <div className="max-w-5xl mx-auto">
+      <div
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-400"
+        style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(12px)", transition: "opacity 0.4s ease, transform 0.4s ease" }}
+      >
+        {current.map((t, i) => (
+          <TestimonialCard key={i} quote={t.quote} name={t.name} location={t.location} />
+        ))}
+      </div>
+      {/* Dots */}
+      <div className="flex justify-center gap-2 mt-8">
+        {Array.from({ length: totalPages }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => { setVisible(false); setTimeout(() => { setPage(i); setVisible(true); }, 400); }}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === page ? "bg-primary scale-125" : "bg-gray-300 hover:bg-primary/50"}`}
+            aria-label={`Go to page ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function TestimonialCard({ quote, name, location }: { quote: string; name: string; location: string }) {
