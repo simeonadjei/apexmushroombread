@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useCreateOrder } from "@workspace/api-client-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,9 +24,7 @@ const formSchema = z.object({
 });
 
 export default function Order() {
-  const [isRedirecting, setIsRedirecting] = useState(false);
-
-  const createOrder = useCreateOrder();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,37 +50,45 @@ export default function Order() {
     }
   }, [form]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    createOrder.mutate({ data: values }, {
-      onSuccess: async (order) => {
-        setIsRedirecting(true);
-        try {
-          const callbackUrl = `${window.location.origin}/order/callback`;
-          const apiBase = (import.meta.env.VITE_API_URL as string) || "";
-          const res = await fetch(`${apiBase}/api/orders/${order.id}/pay`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ callbackUrl }),
-          });
-          const data = await res.json() as { authorization_url?: string; error?: string };
-          if (!res.ok || !data.authorization_url) {
-            toast.error(data.error || "Could not initialize payment. Please try again.");
-            setIsRedirecting(false);
-            return;
-          }
-          window.location.href = data.authorization_url;
-        } catch {
-          toast.error("Could not reach the payment server. Please try again.");
-          setIsRedirecting(false);
-        }
-      },
-      onError: () => {
-        toast.error("Failed to create order. Please try again.");
-      }
-    });
-  }
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    try {
+      const apiBase = (import.meta.env.VITE_API_URL as string) || "";
 
-  const isLoading = createOrder.isPending || isRedirecting;
+      // Step 1: create the order
+      const orderRes = await fetch(`${apiBase}/api/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const order = await orderRes.json() as { id?: number; error?: string };
+      if (!orderRes.ok || !order.id) {
+        toast.error(order.error || "Failed to create order. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Step 2: initialise Paystack payment server-side
+      const callbackUrl = `${window.location.origin}/order/callback`;
+      const payRes = await fetch(`${apiBase}/api/orders/${order.id}/pay`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ callbackUrl }),
+      });
+      const payData = await payRes.json() as { authorization_url?: string; error?: string };
+      if (!payRes.ok || !payData.authorization_url) {
+        toast.error(payData.error || "Could not initialize payment. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Step 3: redirect to Paystack hosted page
+      window.location.href = payData.authorization_url;
+    } catch {
+      toast.error("Could not reach the payment server. Please try again.");
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div className="flex-1 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
