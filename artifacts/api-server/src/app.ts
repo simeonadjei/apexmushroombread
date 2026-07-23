@@ -32,7 +32,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
-app.options("*", cors(corsOptions)); // handle preflight for every route
+app.options("/{*path}", cors(corsOptions)); // handle preflight for every route
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
